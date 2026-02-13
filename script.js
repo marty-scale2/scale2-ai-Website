@@ -428,6 +428,72 @@ function initCookieBanner() {
 }
 
 // ==========================================
+// Contact Modal
+// ==========================================
+function initContactModal() {
+    const modal = document.getElementById('contactModal');
+    const openBtn = document.getElementById('openContactModal');
+    const closeBtn = document.getElementById('closeContactModal');
+    const form = document.getElementById('contactForm');
+    const success = document.getElementById('formSuccess');
+
+    if (!modal || !openBtn) return;
+
+    openBtn.addEventListener('click', () => {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    });
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector('.form-submit');
+        submitBtn.disabled = true;
+        submitBtn.querySelector('span').textContent = 'Wird gesendet...';
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+            });
+
+            if (response.ok) {
+                form.style.display = 'none';
+                success.style.display = 'block';
+                setTimeout(() => {
+                    closeModal();
+                    form.reset();
+                    form.style.display = '';
+                    success.style.display = 'none';
+                    submitBtn.disabled = false;
+                    submitBtn.querySelector('span').textContent = 'Absenden';
+                }, 3000);
+            } else {
+                throw new Error('Fehler beim Senden');
+            }
+        } catch (err) {
+            submitBtn.disabled = false;
+            submitBtn.querySelector('span').textContent = 'Absenden';
+            alert('Es gab einen Fehler. Bitte versuche es erneut.');
+        }
+    });
+}
+
+// ==========================================
 // Initialize
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -444,4 +510,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initParallax();
     initScrollProgress();
     initCookieBanner();
+    initContactModal();
 });

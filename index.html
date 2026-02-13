@@ -443,12 +443,12 @@
             <div class="cta-block reveal">
                 <h2>Bereit, KI einfach zu machen?</h2>
                 <p>Kein Sales-Pitch. Kein Gedöns. Nur ein Gespräch auf Augenhöhe, um herauszufinden, ob wir dir helfen können.</p>
-                <a href="https://calendly.com/martin-thun/austausch" target="_blank" rel="noopener noreferrer" class="cta-button cta-large">
-                    <span>Erstgespräch vereinbaren</span>
+                <button type="button" class="cta-button cta-large" id="openContactModal">
+                    <span>Verfügbarkeit checken</span>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
-                </a>
+                </button>
             </div>
         </div>
     </section>
@@ -457,11 +457,14 @@
     <footer class="footer">
         <div class="container footer-content">
             <div class="footer-logo">scale<sup>2</sup></div>
-            <div class="footer-text">AI Growth Partner -KI in EINFACH.</div>
+            <div class="footer-text">AI Growth Partner - KI in EINFACH.</div>
             <div class="footer-links">
                 <a href="impressum.html">Impressum</a>
                 <a href="datenschutz.html">Datenschutz</a>
             </div>
+        </div>
+        <div class="container footer-transparency">
+            KI-Transparenzhinweis: Diese Website wurde zu 100% mit Claude Code vibe-gecodet. Kein überteuerter Webdesigner wurde für die Erstellung dieser Website beauftragt.
         </div>
     </footer>
 
@@ -497,6 +500,53 @@
             loadGoogleAnalytics();
         }
     </script>
+
+    <!-- Contact Modal -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal">
+            <button type="button" class="modal-close" id="closeContactModal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+            <h3 class="modal-title">Lass uns sprechen.</h3>
+            <p class="modal-subtitle">Kein Sales-Pitch. Nur ein kurzes Gespräch, ob und wie wir dir helfen können.</p>
+            <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="4231b42f-05e1-4230-8d5f-f52272c7efe0">
+                <input type="hidden" name="subject" value="Neue Anfrage über scale²-Website">
+                <input type="hidden" name="from_name" value="scale² Website">
+                <div class="form-group">
+                    <label for="contactName">Name</label>
+                    <input type="text" id="contactName" name="name" required placeholder="Dein Name">
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">E-Mail</label>
+                    <input type="email" id="contactEmail" name="email" required placeholder="deine@email.de">
+                </div>
+                <div class="form-group">
+                    <label for="contactMessage">Deine Anfrage</label>
+                    <textarea id="contactMessage" name="message" required placeholder="Worum geht's? Erzähl kurz, was dich interessiert." rows="4"></textarea>
+                </div>
+                <div class="form-checkbox">
+                    <input type="checkbox" id="contactConsent" name="consent" required>
+                    <label for="contactConsent">Ich willige ein, an meine angegebene E-Mail-Adresse bezüglich meiner Anfrage kontaktiert zu werden.</label>
+                </div>
+                <button type="submit" class="cta-button cta-large form-submit">
+                    <span>Absenden</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </form>
+            <div class="form-success" id="formSuccess">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#39ff14" stroke-width="2">
+                    <path d="M20 6L9 17l-5-5"/>
+                </svg>
+                <h3>Anfrage gesendet!</h3>
+                <p>Wir melden uns zeitnah bei dir.</p>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="script.js"></script>
